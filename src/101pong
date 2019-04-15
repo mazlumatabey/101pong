@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2018
+## 101pong.py
+## File description:
+## calculate coordinate and velovity vector of a ball which is moving like on the pong game
+##
+
+from sys import*
+from math import*
+
+class vec:
+    '''class containing the variables used in the funtion (called vec for vector)'''
+    x0 = 0.00
+    y0 = 0.00
+    z0 = 0.00
+    x1 = 0.00
+    y1 = 0.00
+    z1 = 0.00
+    n = 0.00
+    x = 0.00
+    y = 0.00
+    z = 0.00
+    xt = 0.00
+    yt = 0.00
+    zt = 0.00
+    angle = 0.00
+    norm = 0.00
+
+def attribution():
+    vec.x0 = float(argv[1])
+    vec.y0 = float(argv[2])
+    vec.z0 = float(argv[3])
+    vec.x1 = float(argv[4])
+    vec.y1 = float(argv[5])
+    vec.z1 = float(argv[6])
+    vec.n = int(argv[7])
+    vec.x = vec.x1 - vec.x0;
+    vec.y = vec.y1 - vec.y0;
+    vec.z = vec.z1 - vec.z0;
+    vec.xt = (vec.x * vec.n) + vec.x1;
+    vec.yt = (vec.y * vec.n) + vec.y1;
+    vec.zt = (vec.z * vec.n) + vec.z1;
+    vec.norm = sqrt(vec.x*vec.x+vec.y*vec.y+vec.z*vec.z)
+    vec.angle = asin((-vec.z)/vec.norm)*180/pi
+    return vec
+
+def helper():
+    print("USAGE")
+    print("./101pong x0 y0 z0 x1 y1 z1 n\n")
+    print("DESCRIPTION")
+    print("       x0   ball abscissa at time t - 1")
+    print("       y0   ball ordinate at time t - 1")
+    print("       z0   ball altitude at time t - 1")
+    print("       x1   ball abscissa at time t")
+    print("       y1   ball ordinate at time t")
+    print("       z1   ball altitude at time t")
+    print("       n    time shift (greater than or equal to zero, integer")
+
+def main():
+    try:
+        size = len(argv)
+        if(size == 2 and argv[1] == "-h"):
+            helper()
+            return 0
+        else:
+            vec = attribution()
+            print("The velocity vector of the ball is:\n(%.2f, %.2f, %.2f)" % (vec.x, vec.y, vec.z)) 
+            print("At time t + %d, ball coordinates will be:\n(%.2f, %.2f, %.2f)" % (vec.n, vec.xt, vec.yt, vec.zt)) 
+            if (vec.zt <= 0 and vec.z0 > 0) or (vec.zt >= 0 and vec.z0 < 0):
+                print("The incidence angle is:")
+                print("%.2f degrees" % (vec.angle))
+                return 0
+            else:
+                print("The ball won't reach the bat")
+                return 0
+    except:
+        print("error")
+        exit (84)
+main()
